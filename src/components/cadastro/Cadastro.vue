@@ -2,25 +2,23 @@
 
   <div>
     <h1 class="centralizado">Cadastro</h1>
-    <h2 class="centralizado"></h2>
+    <h2 class="centralizado">{{foto.titulo}}</h2>
 
-    
-
-    <form >
+    <form @submit.prevent="grava()">
       <div class="controle">
         <label for="titulo">TÍTULO</label>
-        <input id="titulo" autocomplete="off">
+        <input id="titulo" autocomplete="off" v-model.lazy="foto.titulo">
       </div>
 
       <div class="controle">
         <label for="url">URL</label>
-        <input id="url" autocomplete="off">
-        <imagem-responsiva/>
+        <input id="url" autocomplete="off" v-model.lazy="foto.url">
+        <imagem-responsiva v-show="foto.url" :url="foto.url" :titulo="foto.titulo"/>
       </div>
 
       <div class="controle">
         <label for="descricao">DESCRIÇÃO</label>
-        <textarea id="descricao" autocomplete="off"/>
+        <textarea id="descricao" autocomplete="off" v-model="foto.descricao"/>
       </div>
 
       <div class="centralizado">
@@ -35,13 +33,32 @@
 <script>
 import ImagemResponsiva from '../shared/imagem-responsiva/ImagemResponsiva.vue'
 import Botao from '../shared/botao/Botao.vue';
-
+import Foto from '../../domain/foto/Foto'
 
 export default {
   components: {
     'imagem-responsiva': ImagemResponsiva, 
     'meu-botao': Botao
+  },
+
+  data() {
+
+    return {
+
+      foto: new Foto()
+
+    }
+
+  },
+
+  methods: {
+    grava(){
+      console.log('enviar dados para a API')
+      this.foto = new Foto()
+    }
   }
+
+
 }
 </script>
 
